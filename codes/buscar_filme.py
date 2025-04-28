@@ -1,10 +1,10 @@
-from flask import jsonify
+class BuscarFilme:
+    def __init__(self, conn):
+        self.conn = conn
 
-
-class BuscarFilme():
-    def __init__(self, nome_do_filme, ano_do_filme):
-        self.nome_do_filme = nome_do_filme
-        self.ano_do_filme = ano_do_filme
-
-    def buscar_filme():
-        return jsonify({'message': 'filme buscado'})
+    def buscar_filme(self):
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT * FROM filmes")
+        filmes = cursor.fetchall() 
+        cursor.close()
+        return filmes

@@ -1,10 +1,10 @@
-from flask import jsonify
+class BuscarSerie:
+    def __init__(self, conn):
+        self.conn = conn
 
-
-class BuscarSerie():
-    def __init__(self, nome_do_serie, ano_do_serie):
-        self.nome_do_serie = nome_do_serie
-        self.ano_do_serie = ano_do_serie
-        
-    def buscar_serie():
-        return jsonify({'message': 'serie buscado'})
+    def buscar_serie(self):
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT * FROM series")
+        series = cursor.fetchall()  # Captura os dados do SELECT
+        cursor.close()
+        return series
