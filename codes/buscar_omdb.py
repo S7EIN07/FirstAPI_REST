@@ -3,6 +3,5 @@ class BuscarOMDb:
         self.nome = nome_filme
         self.id = id
 
-    def buscar_filme_omdb():
-        filmes = []
-        return filmes
+    def buscar_filme_omdb_nome(self):
+        return

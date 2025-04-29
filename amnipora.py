@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 import psycopg
 import os
 from dotenv import load_dotenv
-from codes import buscar_serie, buscar_filme
+from codes import buscar_serie, buscar_filme, buscar_omdb
 
 
 app = Flask(__name__)
@@ -32,6 +32,9 @@ def buscar_filmes_endpoint(nome_filme_link):
 
     filme = buscar_filme.BuscarFilme(cursor, nome)
     resultado = filme.buscar_filme()
+    if not resultado:
+        filme_omdb = buscar_omdb.BuscarOMDb(cursor, nome)
+        resultado = filme_omdb.buscar_omdb.BuscarOMDb()
     cursor.close()
     return jsonify({
         "Titulo": resultado[1],
@@ -44,10 +47,13 @@ def buscar_filmes_endpoint(nome_filme_link):
 def buscar_filmes_endpoint(id_filme_link):
     cursor = conn
 
-    id = id_filme_link
+    id_filme = id_filme_link
 
-    filme = buscar_filme.BuscarFilme(cursor, id)
+    filme = buscar_filme.BuscarFilme(cursor, id_filme)
     resultado = filme.buscar_filme()
+    if not resultado:
+        filme_omdb = buscar_omdb.BuscarOMDb(cursor, id_filme)
+        resultado = filme_omdb.buscar_omdb.BuscarOMDb()
     cursor.close()
     return jsonify({
         "Titulo": resultado[1],
@@ -60,10 +66,13 @@ def buscar_filmes_endpoint(id_filme_link):
 def buscar_serie_endpoint(nome_serie_link):
     cursor = conn
 
-    nome = nome_serie_link
+    nome_serie = nome_serie_link
 
-    serie = buscar_serie.BuscarSerie(cursor, nome)
+    serie = buscar_serie.BuscarSerie(cursor, nome_serie)
     resultado = serie.buscar_serie()
+    if not resultado:
+        serie_omdb = buscar_omdb.BuscarOMDb(cursor, nome_serie)
+        resultado = serie_omdb.buscar_omdb.BuscarOMDb()
     cursor.close()
     return jsonify({
         "Titulo": resultado[1],
@@ -76,10 +85,13 @@ def buscar_serie_endpoint(nome_serie_link):
 def buscar_serie_endpoint(id_serie_link):
     cursor = conn
 
-    id = id_serie_link
+    id_serie = id_serie_link
 
-    serie = buscar_serie.BuscarSerie(cursor, id)
+    serie = buscar_serie.BuscarSerie(cursor, id_serie)
     resultado = serie.buscar_serie()
+    if not resultado:
+        serie_omdb = buscar_omdb.BuscarOMDb(cursor, id_serie)
+        resultado = serie_omdb.buscar_omdb.BuscarOMDb()
     cursor.close()
     return jsonify({
         "Titulo": resultado[1],
