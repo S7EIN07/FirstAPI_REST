@@ -25,7 +25,7 @@ imdb_search = ('omdbapi.com/')
 
 
 @app.route("/buscar_filme_nome/<nome_filme_link>", methods=["GET"])
-def buscar_filmes_endpoint(nome_filme_link):
+def buscar_filmes_endpoint_nome(nome_filme_link):
     cursor = conn
 
     nome = nome_filme_link
@@ -44,7 +44,7 @@ def buscar_filmes_endpoint(nome_filme_link):
 
 
 @app.route("/buscar_filme_id/<id_filme_link>", methods=["GET"])
-def buscar_filmes_endpoint(id_filme_link):
+def buscar_filmes_endpoint_id(id_filme_link):
     cursor = conn
 
     id_filme = id_filme_link
@@ -63,7 +63,7 @@ def buscar_filmes_endpoint(id_filme_link):
 
 
 @app.route("/buscar_serie_nome/<nome_serie_link>", methods=["GET"])
-def buscar_serie_endpoint(nome_serie_link):
+def buscar_serie_endpoint_nome(nome_serie_link):
     cursor = conn
 
     nome_serie = nome_serie_link
@@ -82,7 +82,7 @@ def buscar_serie_endpoint(nome_serie_link):
 
 
 @app.route("/buscar_serie_id/<id_serie_link>", methods=["GET"])
-def buscar_serie_endpoint(id_serie_link):
+def buscar_serie_endpoint_nome(id_serie_link):
     cursor = conn
 
     id_serie = id_serie_link
