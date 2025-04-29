@@ -82,7 +82,7 @@ def buscar_serie_endpoint_nome(nome_serie_link):
 
 
 @app.route("/buscar_serie_id/<id_serie_link>", methods=["GET"])
-def buscar_serie_endpoint_nome(id_serie_link):
+def buscar_serie_endpoint_id(id_serie_link):
     cursor = conn
 
     id_serie = id_serie_link
