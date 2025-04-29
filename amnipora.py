@@ -30,7 +30,11 @@ def buscar_filmes_endpoint(nome_filme_link):
     filme = buscar_filme.BuscarFilme(cursor, nome)
     resultado = filme.buscar_filme()
     cursor.close()
-    return jsonify({'resultado': resultado})
+    return jsonify({
+        "Titulo": resultado[1],
+        "Ano": resultado[2],
+        "Genero": resultado[3]
+    })
 
 
 @app.route("/buscar_filme_id/<id_filme_link>", methods=["GET"])
@@ -42,7 +46,11 @@ def buscar_filmes_endpoint(id_filme_link):
     filme = buscar_filme.BuscarFilme(cursor, id)
     resultado = filme.buscar_filme()
     cursor.close()
-    return jsonify({'resultado': resultado})
+    return jsonify({
+        "Titulo": resultado[1],
+        "Ano": resultado[2],
+        "Genero": resultado[3]
+    })
 
 
 @app.route("/buscar_serie_nome/<nome_serie_link>", methods=["GET"])
@@ -54,7 +62,11 @@ def buscar_serie_endpoint(nome_serie_link):
     serie = buscar_serie.BuscarSerie(cursor, nome)
     resultado = serie.buscar_serie()
     cursor.close()
-    return jsonify({'resultado': resultado})
+    return jsonify({
+        "Titulo": resultado[1],
+        "Ano": resultado[2],
+        "Genero": resultado[3]
+    })
 
 
 @app.route("/buscar_serie_id/<id_serie_link>", methods=["GET"])
@@ -66,4 +78,8 @@ def buscar_serie_endpoint(id_serie_link):
     serie = buscar_serie.BuscarSerie(cursor, id)
     resultado = serie.buscar_serie()
     cursor.close()
-    return jsonify({'resultado': resultado})
+    return jsonify({
+        "Titulo": resultado[1],
+        "Ano": resultado[2],
+        "Genero": resultado[3]
+    })
