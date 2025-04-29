@@ -21,7 +21,7 @@ DB_PORT = os.getenv("DB_PORT")
 conn = psycopg.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, host=DB_HOST, port=DB_PORT)
 
 
-omdb_search = ('omdbapi.com/')
+imdb_search = ('omdbapi.com')
 
 
 @app.route("/buscar_filme_nome/<nome_filme_link>", methods=["GET"])
@@ -33,7 +33,7 @@ def buscar_filmes_endpoint(nome_filme_link):
     filme = buscar_filme.BuscarFilme(cursor, nome)
     resultado = filme.buscar_filme()
     if not resultado:
-        filme_omdb = buscar_omdb.BuscarOMDb(cursor, nome)
+        filme_omdb = buscar_omdb.BuscarOMDb(cursor, nome, API_KEY)
         resultado = filme_omdb.buscar_omdb.BuscarOMDb()
     cursor.close()
     return jsonify({
@@ -52,7 +52,7 @@ def buscar_filmes_endpoint(id_filme_link):
     filme = buscar_filme.BuscarFilme(cursor, id_filme)
     resultado = filme.buscar_filme()
     if not resultado:
-        filme_omdb = buscar_omdb.BuscarOMDb(cursor, id_filme)
+        filme_omdb = buscar_omdb.BuscarOMDb(cursor, id_filme, API_KEY)
         resultado = filme_omdb.buscar_omdb.BuscarOMDb()
     cursor.close()
     return jsonify({
@@ -71,7 +71,7 @@ def buscar_serie_endpoint(nome_serie_link):
     serie = buscar_serie.BuscarSerie(cursor, nome_serie)
     resultado = serie.buscar_serie()
     if not resultado:
-        serie_omdb = buscar_omdb.BuscarOMDb(cursor, nome_serie)
+        serie_omdb = buscar_omdb.BuscarOMDb(cursor, nome_serie, API_KEY)
         resultado = serie_omdb.buscar_omdb.BuscarOMDb()
     cursor.close()
     return jsonify({
@@ -90,7 +90,7 @@ def buscar_serie_endpoint(id_serie_link):
     serie = buscar_serie.BuscarSerie(cursor, id_serie)
     resultado = serie.buscar_serie()
     if not resultado:
-        serie_omdb = buscar_omdb.BuscarOMDb(cursor, id_serie)
+        serie_omdb = buscar_omdb.BuscarOMDb(cursor, id_serie, API_KEY)
         resultado = serie_omdb.buscar_omdb.BuscarOMDb()
     cursor.close()
     return jsonify({
