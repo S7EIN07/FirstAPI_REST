@@ -21,6 +21,9 @@ DB_PORT = os.getenv("DB_PORT")
 conn = psycopg.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, host=DB_HOST, port=DB_PORT)
 
 
+imdb_search = ()
+
+
 @app.route("/buscar_filme_nome/<nome_filme_link>", methods=["GET"])
 def buscar_filmes_endpoint(nome_filme_link):
     cursor = conn
