@@ -30,7 +30,7 @@ def buscar_filmes_endpoint_nome(nome_filme_link):
 
     nome = nome_filme_link
 
-    filme = buscar_filme_nome.BuscarFilme(cursor, nome)
+    filme = buscar_filme.BuscarFilmeNome(cursor, nome)
     resultado = filme.buscar_filme()
     if not resultado:
         filme_omdb = buscar_omdb_nome.BuscarOMDb(cursor, nome, API_KEY)
@@ -49,7 +49,7 @@ def buscar_filmes_endpoint_id(id_filme_link):
 
     id_filme = id_filme_link
 
-    filme = buscar_filme_nome.BuscarFilme(cursor, id_filme)
+    filme = buscar_filme.BuscarFilme(cursor, id_filme)
     resultado = filme.buscar_filme()
     if not resultado:
         filme_omdb = buscar_omdb_nome.BuscarOMDb(cursor, id_filme, API_KEY)
