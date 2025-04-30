@@ -53,7 +53,7 @@ def buscar_filmes_endpoint_id(id_filme_link):
     resultado = filme.buscar_filme_id()
     if not resultado:
         filme_omdb = buscar_omdb_filme_id.BuscarOMDbFilmeId(cursor, id_filme, API_KEY)
-        resultado = filme_omdb.buscar_filem_omdb_id()
+        resultado = filme_omdb.buscar_filme_omdb_id()
     cursor.close()
     return jsonify({
         "Titulo": resultado[1],

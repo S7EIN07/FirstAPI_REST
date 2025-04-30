@@ -4,7 +4,7 @@ class BuscarSerieNome:
         self.nome = nome
 
     def buscar_serie_nome(self):
-        cursor = self.cursor.cursor()
+        cursor = self.cursor
         cursor.execute("SELECT * FROM series WHERE nome = %s", (self.nome))
         series = cursor.fetchall() 
         cursor.close()
