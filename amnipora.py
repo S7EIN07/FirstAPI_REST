@@ -26,7 +26,7 @@ imdb_search = ('omdbapi.com/')
 
 @app.route("/buscar_filme_nome/<nome_filme_link>", methods=["GET"])
 def buscar_filmes_endpoint_nome(nome_filme_link):
-    cursor = conn
+    cursor = conn.cursor()
 
     nome = nome_filme_link
 
@@ -34,7 +34,7 @@ def buscar_filmes_endpoint_nome(nome_filme_link):
     resultado = filme.buscar_filme_nome()
     if not resultado:
         filme_omdb = buscar_omdb_filme_nome.BuscarOMDbFilmeNome(cursor, nome, API_KEY)
-        resultado = filme_omdb.buscar_filme_omdb_nome.BuscarOMDbFilmeNome()
+        resultado = filme_omdb.buscar_filme_omdb_nome()
     cursor.close()
     return jsonify({
         "Titulo": resultado[1],
@@ -45,7 +45,7 @@ def buscar_filmes_endpoint_nome(nome_filme_link):
 
 @app.route("/buscar_filme_id/<id_filme_link>", methods=["GET"])
 def buscar_filmes_endpoint_id(id_filme_link):
-    cursor = conn
+    cursor = conn.cursor()
 
     id_filme = id_filme_link
 
@@ -53,7 +53,7 @@ def buscar_filmes_endpoint_id(id_filme_link):
     resultado = filme.buscar_filme_id()
     if not resultado:
         filme_omdb = buscar_omdb_filme_id.BuscarOMDbFilmeId(cursor, id_filme, API_KEY)
-        resultado = filme_omdb.buscar_filem_omdb_id.BuscarOMDbFilmeId()
+        resultado = filme_omdb.buscar_filem_omdb_id()
     cursor.close()
     return jsonify({
         "Titulo": resultado[1],
@@ -64,7 +64,7 @@ def buscar_filmes_endpoint_id(id_filme_link):
 
 @app.route("/buscar_serie_nome/<nome_serie_link>", methods=["GET"])
 def buscar_serie_endpoint_nome(nome_serie_link):
-    cursor = conn
+    cursor = conn.cursor()
 
     nome_serie = nome_serie_link
 
@@ -72,7 +72,7 @@ def buscar_serie_endpoint_nome(nome_serie_link):
     resultado = serie.buscar_serie_nome()
     if not resultado:
         serie_omdb = buscar_omdb_filme_nome.BuscarOMDbSerieNome(cursor, nome_serie, API_KEY)
-        resultado = serie_omdb.buscar_serie_omdb_nome.BuscarOMDbSerieNome()
+        resultado = serie_omdb.buscar_serie_omdb_nome()
     cursor.close()
     return jsonify({
         "Titulo": resultado[1],
@@ -83,7 +83,7 @@ def buscar_serie_endpoint_nome(nome_serie_link):
 
 @app.route("/buscar_serie_id/<id_serie_link>", methods=["GET"])
 def buscar_serie_endpoint_id(id_serie_link):
-    cursor = conn
+    cursor = conn.cursor()
 
     id_serie = id_serie_link
 
@@ -91,7 +91,7 @@ def buscar_serie_endpoint_id(id_serie_link):
     resultado = serie.buscar_serie()
     if not resultado:
         serie_omdb = buscar_omdb_filme_nome.BuscarOMDbSerieId(cursor, id_serie, API_KEY)
-        resultado = serie_omdb.buscar_omdb.BuscarOMDbSerieId()
+        resultado = serie_omdb.buscar_omdb_serie_id()
     cursor.close()
     return jsonify({
         "Titulo": resultado[1],
