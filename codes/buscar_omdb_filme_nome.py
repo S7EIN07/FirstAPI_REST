@@ -6,9 +6,9 @@ class BuscarOMDbFilmeNome:
         self.cursor = cursor
         self.api_key = API_KEY
 
-    def buscar_filme_omdb_nome(self):
+    def buscar_omdb_filme_nome(self):
         filme = f"https://www.omdbapi.com/?t={self.nome}&apikey={self.api_key}"
-        resposta = request.get(filme)
+        resposta = request.get_json(filme)
         return resposta.json()
     
     def postar_no_bd(filme):

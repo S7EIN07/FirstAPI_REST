@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 import psycopg
 import os
 from dotenv import load_dotenv
-from codes import buscar_filme_nome, buscar_filme_id, buscar_omdb_filme_id, buscar_omdb_filme_nome, buscar_serie_nome, buscar_serie_id
+from codes import buscar_filme_nome, buscar_filme_id, buscar_omdb_filme_id, buscar_omdb_filme_nome, buscar_serie_nome, buscar_serie_id, buscar_omdb_serie_id, buscar_omdb_serie_nome 
 
 
 app = Flask(__name__)
@@ -34,12 +34,19 @@ def buscar_filmes_endpoint_nome(nome_filme_link):
     resultado = filme.buscar_filme_nome()
     if not resultado:
         filme_omdb = buscar_omdb_filme_nome.BuscarOMDbFilmeNome(cursor, nome, API_KEY)
-        resultado = filme_omdb.buscar_filme_omdb_nome()
+        resultado = filme_omdb.buscar_omdb_filme_nome()
     cursor.close()
-    return jsonify({
+    if isinstance(resultado, (list, tuple)):
+        return jsonify({
         "Titulo": resultado[1],
         "Ano": resultado[2],
         "Genero": resultado[3]
+    })
+    else:
+        return jsonify({
+        "Titulo": resultado.get("Title"),
+        "Ano": resultado.get("Year"),
+        "Genero": resultado.get("Genre")
     })
 
 
@@ -53,14 +60,20 @@ def buscar_filmes_endpoint_id(id_filme_link):
     resultado = filme.buscar_filme_id()
     if not resultado:
         filme_omdb = buscar_omdb_filme_id.BuscarOMDbFilmeId(cursor, id_filme, API_KEY)
-        resultado = filme_omdb.buscar_filme_omdb_id()
+        resultado = filme_omdb.buscar_omdb_filme_id()
     cursor.close()
-    return jsonify({
+    if isinstance(resultado, (list, tuple)):
+        return jsonify({
         "Titulo": resultado[1],
         "Ano": resultado[2],
         "Genero": resultado[3]
     })
-
+    else:
+        return jsonify({
+        "Titulo": resultado.get("Title"),
+        "Ano": resultado.get("Year"),
+        "Genero": resultado.get("Genre")
+    })
 
 @app.route("/buscar_serie_nome/<nome_serie_link>", methods=["GET"])
 def buscar_serie_endpoint_nome(nome_serie_link):
@@ -71,13 +84,20 @@ def buscar_serie_endpoint_nome(nome_serie_link):
     serie = buscar_serie_nome.BuscarSerieNome(cursor, nome_serie)
     resultado = serie.buscar_serie_nome()
     if not resultado:
-        serie_omdb = buscar_omdb_filme_nome.BuscarOMDbSerieNome(cursor, nome_serie, API_KEY)
+        serie_omdb = buscar_omdb_serie_nome.BuscarOMDbSerieNome(cursor, nome_serie, API_KEY)
         resultado = serie_omdb.buscar_serie_omdb_nome()
     cursor.close()
-    return jsonify({
+    if isinstance(resultado, (list, tuple)):
+        return jsonify({
         "Titulo": resultado[1],
         "Ano": resultado[2],
         "Genero": resultado[3]
+    })
+    else:
+        return jsonify({
+        "Titulo": resultado.get("Title"),
+        "Ano": resultado.get("Year"),
+        "Genero": resultado.get("Genre")
     })
 
 
@@ -87,14 +107,21 @@ def buscar_serie_endpoint_id(id_serie_link):
 
     id_serie = id_serie_link
 
-    serie = buscar_serie_nome.BuscarSerieId(cursor, id_serie)
+    serie = buscar_serie_id.BuscarSerieId(cursor, id_serie)
     resultado = serie.buscar_serie()
     if not resultado:
-        serie_omdb = buscar_omdb_filme_nome.BuscarOMDbSerieId(cursor, id_serie, API_KEY)
+        serie_omdb = buscar_omdb_serie_id.BuscarOMDbSerieId(cursor, id_serie, API_KEY)
         resultado = serie_omdb.buscar_omdb_serie_id()
     cursor.close()
-    return jsonify({
+    if isinstance(resultado, (list, tuple)):
+        return jsonify({
         "Titulo": resultado[1],
         "Ano": resultado[2],
         "Genero": resultado[3]
+    })     
+    else:
+        return jsonify({
+            "Titulo": resultado.get("Title"),
+            "Ano": resultado.get("Year"),
+            "Genero": resultado.get("Genre")
     })

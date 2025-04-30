@@ -6,9 +6,9 @@ class BuscarOMDbSerieId:
         self.api_key = API_KEY
         self.id = id_serie
 
-    def buscar_serie_omdb_nome(self):
+    def buscar_serie_omdb_id(self):
         serie = f"https://www.omdbapi.com/?i={self.id}&apikey={self.api_key}"
-        resposta = request.get(serie)
+        resposta = request.get_json(serie)
         return resposta.json()
     
     def postar_no_bd(serie):
