@@ -1,4 +1,4 @@
-from flask import request
+import requests
 
 class BuscarOMDbSerieId:
     def __init__(self, cursor, id_serie, API_KEY):
@@ -8,7 +8,7 @@ class BuscarOMDbSerieId:
 
     def buscar_serie_omdb_id(self):
         serie = f"https://www.omdbapi.com/?i={self.id}&apikey={self.api_key}"
-        resposta = request.get_json(serie)
+        resposta = requests.get_json(serie)
         return resposta.json()
     
     def postar_no_bd(serie):
