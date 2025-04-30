@@ -4,7 +4,7 @@ class BuscarSerieId:
         self.id = id
 
     def buscar_serie_id(self):
-        cursor = self.cursor()
+        cursor = self.cursor.cursor()
         cursor.execute("SELECT * FROM series WHERE id = %s", (self.id))
         series = cursor.fetchall() 
         cursor.close()
