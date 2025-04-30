@@ -1,4 +1,4 @@
-from flask import request
+from flask import requests
 
 class BuscarOMDbFilmeId:
     def __init__(self, cursor, id_filme, API_KEY):
@@ -8,7 +8,7 @@ class BuscarOMDbFilmeId:
 
     def buscar_filme_omdb_nome(self):
         filme = f"https://www.omdbapi.com/?i={self.id}&apikey={self.api_key}"
-        resposta = request.get_json(filme)
+        resposta = requests.get(filme)
         return resposta.json()
     
     def postar_no_bd(filme):
