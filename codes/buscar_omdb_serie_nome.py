@@ -1,12 +1,12 @@
 import requests
 
-class BuscarOMDbserieNome:
+class BuscarOMDbSerieNome:
     def __init__(self, cursor, nome_serie, API_KEY):
         self.nome = nome_serie
         self.cursor = cursor
         self.api_key = API_KEY
 
-    def buscar_serie_omdb_nome(self):
+    def buscar_omdb_serie_nome(self):
         serie = f"https://www.omdbapi.com/?t={self.nome}&apikey={self.api_key}"
         resposta = requests.get(serie)
         if resposta.status_code == 200:
