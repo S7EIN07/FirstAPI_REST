@@ -1,4 +1,4 @@
-import requests
+from flask import requests
 
 class BuscarOMDbSerieId:
     def __init__(self, cursor, id_serie, API_KEY):
