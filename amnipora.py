@@ -5,8 +5,10 @@ from dotenv import load_dotenv
 from codes import (
     buscar_filme_nome, buscar_filme_id, buscar_omdb_filme_id, 
     buscar_omdb_filme_nome, buscar_serie_nome, buscar_serie_id, 
-    buscar_omdb_serie_id, buscar_omdb_serie_nome
+    buscar_omdb_serie_id, buscar_omdb_serie_nome, inserir_filme,
+    inserir_serie
 )
+
 
 app = Flask(__name__)
 
@@ -20,6 +22,7 @@ DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")  
 
+
 conn = psycopg.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, host=DB_HOST, port=DB_PORT)
 
 
@@ -30,16 +33,35 @@ def buscar_filmes_endpoint_nome(nome_filme_link):
 
     filme = buscar_filme_nome.BuscarFilmeNome(cursor, nome)
     resultado = filme.buscar_filme_nome()
-    if not resultado:
+
+    if resultado:
+        titulo = resultado[1]
+        ano = resultado[2]
+        genero = resultado[3]
+    else:
         filme_omdb = buscar_omdb_filme_nome.BuscarOMDbFilmeNome(cursor, nome, API_KEY)
         resultado = filme_omdb.buscar_omdb_filme_nome()
+
+        if not resultado:  # OMDb não retornou nada
+            cursor.close()
+            return jsonify({"erro": "Filme não encontrado."}), 404
+
+        titulo = resultado.get("Title")
+        ano = resultado.get("Year")
+        genero = resultado.get("Genre")
+
+        inserir_filme_endpoint = inserir_filme.InserirFilme(conn, resultado)
+        inserir_filme_endpoint.inserir_no_bd()
+        conn.commit()
+
     cursor.close()
 
     return jsonify({
-        "Titulo": resultado[1] if isinstance(resultado, (list, tuple)) else resultado.get("Title"),
-        "Ano": resultado[2] if isinstance(resultado, (list, tuple)) else resultado.get("Year"),
-        "Genero": resultado[3] if isinstance(resultado, (list, tuple)) else resultado.get("Genre")
+        "Titulo": titulo,
+        "Ano": ano,
+        "Genero": genero
     })
+
 
 
 @app.route("/buscar_filme_id/<id_filme_link>", methods=["GET"])
@@ -52,6 +74,9 @@ def buscar_filmes_endpoint_id(id_filme_link):
     if not resultado:
         filme_omdb = buscar_omdb_filme_id.BuscarOMDbFilmeId(cursor, id_filme, API_KEY)
         resultado = filme_omdb.buscar_omdb_filme_id()
+        inserir_filme_endpoint = inserir_filme.InserirFilme(conn, resultado)
+        inserir_filme_endpoint.inserir_no_bd()
+        conn.commit()
     cursor.close()
 
     return jsonify({
@@ -71,6 +96,9 @@ def buscar_serie_endpoint_nome(nome_serie_link):
     if not resultado:
         serie_omdb = buscar_omdb_serie_nome.BuscarOMDbSerieNome(cursor, nome_serie, API_KEY)
         resultado = serie_omdb.buscar_omdb_serie_nome()
+        inserir_serie_endpoint = inserir_serie.Inserirserie(conn, resultado)
+        inserir_serie_endpoint.inserir_no_bd()
+        conn.commit()
     cursor.close()
 
     return jsonify({
@@ -90,6 +118,9 @@ def buscar_serie_endpoint_id(id_serie_link):
     if not resultado:
         serie_omdb = buscar_omdb_serie_id.BuscarOMDbSerieId(cursor, id_serie, API_KEY)
         resultado = serie_omdb.buscar_omdb_serie_id()
+        inserir_serie_endpoint = inserir_serie.Inserirserie(conn, resultado)
+        inserir_serie_endpoint.inserir_no_bd()
+        conn.commit()
     cursor.close()
 
     return jsonify({

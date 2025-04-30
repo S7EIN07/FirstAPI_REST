@@ -4,12 +4,5 @@ class BuscarFilmeNome:
         self.nome = nome
 
     def buscar_filme_nome(self):
-        cursor = self.cursor
-        cursor.execute("SELECT * FROM filmes WHERE nome = %s", (self.nome,))
-        filmes = cursor.fetchall()
-        cursor.close()
-        return filmes
-    
-    
-    
-    
+        self.cursor.execute("SELECT * FROM filmes WHERE nome = %s", (self.nome,))
+        return self.cursor.fetchone()

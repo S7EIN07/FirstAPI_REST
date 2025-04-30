@@ -1,5 +1,4 @@
 import requests
-
 class BuscarOMDbSerieId:
     def __init__(self, cursor, id_serie, API_KEY):
         self.cursor = cursor
@@ -12,10 +11,6 @@ class BuscarOMDbSerieId:
         resposta = requests.get(serie)
         if resposta.status_code == 200:
             return resposta.json()
+            
         else:
             return {"erro": "Falha ao obter os dados da API"}
-    
-
-    def postar_no_bd(serie):
-
-        return
