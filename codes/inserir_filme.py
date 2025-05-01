@@ -20,7 +20,6 @@ class InserirFilme:
                 VALUES (%s, %s, %s, %s, %s)
                 ON CONFLICT (omdb_id) DO NOTHING;
             """
-            
             with self.conn.cursor() as cursor:
                 cursor.execute(query, (omdb_id, titulo, ano, genero, json.dumps(dados)))
                 self.conn.commit()
