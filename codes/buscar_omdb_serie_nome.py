@@ -13,7 +13,3 @@ class BuscarOMDbSerieNome:
             return resposta.json()
         else:
             return {"erro": "Falha ao obter os dados da API"}
-    
-    def postar_no_bd(serie):
-
-        return

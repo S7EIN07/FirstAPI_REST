@@ -1,11 +1,12 @@
 class BuscarFilmeId:
-    def __init__(self, cursor, id):
+    def __init__(self, cursor, id_filme):
         self.cursor = cursor
-        self.id = id
+        self.id_filme = id_filme
 
     def buscar_filme_id(self):
-        cursor = self.cursor
-        cursor.execute("SELECT * FROM filmes WHERE id = %s", (self.id,))
-        filmes = cursor.fetchall() 
-        cursor.close()
-        return filmes
+        try:
+            self.cursor.execute("SELECT * FROM filmes WHERE omdb_id = %s", (self.id_filme,))
+            return self.cursor.fetchone()
+        except Exception:
+            self.cursor.connection.rollback()
+            return None

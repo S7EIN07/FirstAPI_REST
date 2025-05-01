@@ -1,5 +1,4 @@
 import json
-from codes import inserir_filme
 
 class InserirSerie:
     def __init__(self, conn, resultado):
@@ -19,11 +18,12 @@ class InserirSerie:
             query = """
                 INSERT INTO series (omdb_id, nome, ano, genero, dados)
                 VALUES (%s, %s, %s, %s, %s)
-                ON CONFLICT (id) DO NOTHING;
+                ON CONFLICT (omdb_id) DO NOTHING;
             """
-            self.cursor.execute(query, (omdb_id, titulo, ano, genero, json.dumps(dados)))
             with self.conn.cursor() as cursor:
                 cursor.execute(query, (omdb_id, titulo, ano, genero, json.dumps(dados)))
+                self.conn.commit()
         elif tipo == "movie":
+            from codes import inserir_filme
             inserir_new_filme = inserir_filme.InserirSerie(self.conn, self.resultado)
             inserir_new_filme.inserir_no_bd()

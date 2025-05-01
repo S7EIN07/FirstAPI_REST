@@ -4,5 +4,9 @@ class BuscarFilmeNome:
         self.nome = nome
 
     def buscar_filme_nome(self):
-        self.cursor.execute("SELECT * FROM filmes WHERE nome = %s", (self.nome,))
-        return self.cursor.fetchone()
+        try:
+            self.cursor.execute("SELECT * FROM filmes WHERE nome ILIKE %s", (self.nome,))
+            return self.cursor.fetchone()
+        except Exception:
+            self.cursor.connection.rollback()
+            return None

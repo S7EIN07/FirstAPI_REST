@@ -1,11 +1,12 @@
 class BuscarSerieId:
-    def __init__(self, cursor, id):
+    def __init__(self, cursor, id_serie):
         self.cursor = cursor
-        self.id = id
+        self.id_serie = id_serie
 
     def buscar_serie_id(self):
-        cursor = self.cursor
-        cursor.execute("SELECT * FROM series WHERE id = %s", (self.id,))
-        series = cursor.fetchall() 
-        cursor.close()
-        return series
+        try:
+            self.cursor.execute("SELECT * FROM series WHERE omdb_id = %s", (self.id_serie,))
+            return self.cursor.fetchone()
+        except Exception:
+            self.cursor.connection.rollback()
+            return None
