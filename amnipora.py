@@ -33,49 +33,47 @@ def buscar_filmes_endpoint_nome(nome_filme_link):
     nome = nome_filme_link
 
     filme = buscar_filme_nome.BuscarFilmeNome(cursor, nome)
-    resultado = filme.buscar_filme_nome()
+    resultados = filme.buscar_filme_nome()
 
-    if resultado:
-        titulo = resultado[1]
-        ano = resultado[2]
-        genero = resultado[3]
+    filmes_json = []
+
+    if resultados:
+        for resultado in resultados:
+            filmes_json.append({
+                "Titulo": resultado[1],
+                "Ano": resultado[2],
+                "Genero": resultado[3],
+                "mensagem": "Buscado no banco de dados"
+            })
     else:
         filme_omdb = buscar_omdb_filme_nome.BuscarOMDbFilmeNome(cursor, nome, API_KEY)
-        resultado = filme_omdb.buscar_omdb_filme_nome()
+        resultados_omdb = filme_omdb.buscar_omdb_filme_nome()
 
-        if not resultado:  # OMDb não retornou nada
+        if not resultados_omdb:
             cursor.close()
             return jsonify({"erro": "Filme não encontrado."}), 404
 
-        titulo_omdb = resultado.get("Title")
-        ano_omdb = resultado.get("Year")
-        genero_omdb = resultado.get("Genre")
-        tipo_omdb = resultado.get("Type")
-        if tipo_omdb == "movie":
-            tipo_omdb = "Filme"
-        elif tipo_omdb == "series":
-            tipo_omdb = "Série"
+        for resultado in resultados_omdb:
+            titulo = resultado.get("Title")
+            ano = resultado.get("Year")
+            genero = resultado.get("Genre")
+            tipo = resultado.get("Type")
+            tipo_formatado = "Filme" if tipo == "movie" else "Série"
 
-        inserir_filme_endpoint = inserir_filme.InserirFilme(conn, resultado)
-        inserir_filme_endpoint.inserir_no_bd()
+            inserir_filme_endpoint = inserir_filme.InserirFilme(conn, resultado)
+            inserir_filme_endpoint.inserir_no_bd()
 
-        return jsonify({
-        "Titulo": titulo_omdb,
-        "Ano": ano_omdb,
-        "Genero": genero_omdb,
-        "Filme ou Série": tipo_omdb,
-        "mensagem": "Postado no banco de dados"
-    })
+            filmes_json.append({
+                "Titulo": titulo,
+                "Ano": ano,
+                "Genero": genero,
+                "Filme ou Série": tipo_formatado,
+                "mensagem": "Postado no banco de dados"
+            })
 
+    conn.commit()
     cursor.close()
-
-    return jsonify({
-        "Titulo": titulo,
-        "Ano": ano,
-        "Genero": genero,
-        "mensagem": "Buscado no bando de dados"
-    })
-
+    return jsonify(filmes_json)
 
 @app.route("/buscar_filme_id/<id_filme_link>", methods=["GET"])
 def buscar_filmes_endpoint_id(id_filme_link):
@@ -127,45 +125,50 @@ def buscar_filmes_endpoint_id(id_filme_link):
 def buscar_serie_endpoint_nome(nome_serie_link):
     conn.rollback()
     cursor = conn.cursor()
-    nome_serie = nome_serie_link
+    nome = nome_serie_link
 
-    serie = buscar_serie_nome.BuscarSerieNome(cursor, nome_serie)
-    resultado = serie.buscar_serie_nome()
+    serie = buscar_serie_nome.BuscarSerieNome(cursor, nome)
+    resultados = serie.buscar_serie_nome()
 
-    if resultado:
-        titulo = resultado[1]
-        ano = resultado[2]
-        genero = resultado[3]
+    series_json = []
+
+    if resultados:
+        for resultado in resultados:
+            series_json.append({
+                "Titulo": resultado[1],
+                "Ano": resultado[2],
+                "Genero": resultado[3],
+                "mensagem": "Buscado no banco de dados"
+            })
     else:
-        serie_omdb = buscar_omdb_serie_nome.BuscarOMDbSerieNome(cursor, nome_serie, API_KEY)
-        resultado = serie_omdb.buscar_omdb_serie_nome()
+        serie_omdb = buscar_omdb_serie_nome.BuscarOMDbSerieNome(cursor, nome, API_KEY)
+        resultados_omdb = serie_omdb.buscar_omdb_serie_nome()
 
-        if not resultado:
-            return jsonify({"erro": "Série não encontrada."}), 404
+        if not resultados_omdb:
+            cursor.close()
+            return jsonify({"erro": "serie não encontrado."}), 404
 
-        titulo_omdb = resultado.get("Title")
-        ano_omdb = resultado.get("Year")
-        genero_omdb = resultado.get("Genre")
-        tipo_omdb = resultado.get("Type")
+        for resultado in resultados_omdb:
+            titulo = resultado.get("Title")
+            ano = resultado.get("Year")
+            genero = resultado.get("Genre")
+            tipo = resultado.get("Type")
+            tipo_formatado = "serie" if tipo == "movie" else "Série"
 
-        inserir_serie_endpoint = inserir_serie.InserirSerie(conn, resultado)
-        inserir_serie_endpoint.inserir_no_bd()
+            inserir_serie_endpoint = inserir_serie.InserirSerie(conn, resultado)
+            inserir_serie_endpoint.inserir_no_bd()
 
-        return jsonify({
-        "Titulo": titulo_omdb,
-        "Ano": ano_omdb,
-        "Genero": genero_omdb,
-        "Filme ou Série": tipo_omdb,
-        "mensagem": "Postado no banco de dados"
-    })
+            series_json.append({
+                "Titulo": titulo,
+                "Ano": ano,
+                "Genero": genero,
+                "Filme ou Série": tipo_formatado,
+                "mensagem": "Postado no banco de dados"
+            })
+
+    conn.commit()
     cursor.close()
-
-    return jsonify({
-        "Titulo": titulo,
-        "Ano": ano,
-        "Genero": genero,
-        "mensagem": "Buscado no bando de dados"
-    })
+    return jsonify(series_json)
 
 
 @app.route("/buscar_serie_id/<id_serie_link>", methods=["GET"])

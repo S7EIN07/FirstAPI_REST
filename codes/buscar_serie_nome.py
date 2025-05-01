@@ -1,12 +1,15 @@
-class BuscarSerieNome:
+class BuscarFilmeNome:
     def __init__(self, cursor, nome):
         self.cursor = cursor
         self.nome = nome
 
-    def buscar_serie_nome(self):
+    def buscar_filme_nome(self):
         try:
-            self.cursor.execute("SELECT * FROM series WHERE nome ILIKE %s", (self.nome,))
-            return self.cursor.fetchone()
+            self.cursor.execute(
+                "SELECT * FROM series WHERE nome ILIKE %s",
+                (f"%{self.nome}%",)
+            )
+            return self.cursor.fetchall()
         except Exception:
             self.cursor.connection.rollback()
             return None

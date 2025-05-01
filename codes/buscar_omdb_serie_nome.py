@@ -7,9 +7,25 @@ class BuscarOMDbSerieNome:
         self.api_key = API_KEY
 
     def buscar_omdb_serie_nome(self):
-        serie = f"https://www.omdbapi.com/?t={self.nome}&apikey={self.api_key}"
-        resposta = requests.get(serie)
-        if resposta.status_code == 200:
-            return resposta.json()
-        else:
-            return {"erro": "Falha ao obter os dados da API"}
+        url_busca = f"https://www.omdbapi.com/?s={self.nome}&apikey={self.api_key}"
+        resposta = requests.get(url_busca)
+
+        if resposta.status_code != 200:
+            return []
+
+        dados = resposta.json()
+        if dados.get("Response") != "True":
+            return []
+
+        resultados_completos = []
+        for item in dados.get("Search", []):
+            imdb_id = item.get("imdbID")
+            if imdb_id:
+                detalhes_url = f"https://www.omdbapi.com/?i={imdb_id}&apikey={self.api_key}"
+                detalhes_resp = requests.get(detalhes_url)
+                if detalhes_resp.status_code == 200:
+                    detalhe = detalhes_resp.json()
+                    if detalhe.get("Response") == "True":
+                        resultados_completos.append(detalhe)
+
+        return resultados_completos
