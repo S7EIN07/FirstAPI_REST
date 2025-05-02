@@ -6,7 +6,7 @@ class BuscarFilmeNome:
     def buscar_filme_nome(self):
         try:
             self.cursor.execute(
-                "SELECT * FROM series WHERE nome ILIKE %s",
+                "SELECT Title, Plot TEXT, Year, Genre, Rated, Runtime, Language, Country, Type, Seasons FROM Series WHERE nome ILIKE %s",
                 (f"%{self.nome}%",)
             )
             return self.cursor.fetchall()

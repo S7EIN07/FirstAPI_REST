@@ -8,22 +8,26 @@ class InserirFilme:
 
     def inserir_no_bd(self):
         omdb_id = self.resultado.get("imdbID")
-        titulo = self.resultado.get("Title")
-        ano = self.resultado.get("Year")
-        genero = self.resultado.get("Genre")
-        tipo = self.resultado.get("Type")
-        dados = self.resultado
-
-        if tipo == "movie":
+        title = self.resultado.get("Title")
+        plot = self.resultado.get("Plot")
+        year = self.resultado.get("Year")
+        genre = self.resultado.get("Genre")
+        rated = self.resultado.get("Rated")
+        runtime = self.resultado.get("Runtime")
+        language = self.resultado.get("Language")
+        country = self.resultado.get("Country")
+        type = self.resultado.get("Type")
+        
+        if type == "movie":
             query = """
-                INSERT INTO filmes (omdb_id, nome, ano, genero, dados)
-                VALUES (%s, %s, %s, %s, %s)
-                ON CONFLICT (omdb_id) DO NOTHING;
+                INSERT INTO Filmes (Title, Plot, Year, Genre, Rated, Runtime, Language, Country, Type, id)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                ON CONFLICT (id) DO NOTHING;
             """
             with self.conn.cursor() as cursor:
-                cursor.execute(query, (omdb_id, titulo, ano, genero, json.dumps(dados)))
+                cursor.execute(query, (title, plot, year, genre, rated, runtime, language, country, type, omdb_id))
                 self.conn.commit()
-        elif tipo == "series":
+        elif type == "series":
             from codes import inserir_serie
             inserir_new_serie = inserir_serie.InserirSerie(self.conn, self.resultado)
             inserir_new_serie.inserir_no_bd()
