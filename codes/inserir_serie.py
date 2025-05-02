@@ -14,7 +14,7 @@ class InserirSerie:
         runtime = self.resultado.get("Runtime")
         language = self.resultado.get("Language")
         country = self.resultado.get("Country")
-        type = self.resultado.get("Type")
+        type_filme_serie = self.resultado.get("Type")
         seasons = self.resultado.get("Seasons")
 
         if type == "series":
@@ -24,7 +24,7 @@ class InserirSerie:
                 ON CONFLICT (id) DO NOTHING;
             """
             with self.conn.cursor() as cursor:
-                cursor.execute(query, (title, plot, year, genre, rated, runtime, language, country, type, seasons, omdb_id))
+                cursor.execute(query, (title, plot, year, genre, rated, runtime, language, country, type_filme_serie, seasons, omdb_id))
                 self.conn.commit()
         elif type == "movie":
             from codes import inserir_filme
