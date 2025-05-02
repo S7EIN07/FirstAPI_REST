@@ -5,7 +5,7 @@ class BuscarFilmeId:
 
     def buscar_filme_id(self):
         try:
-            self.cursor.execute("SELECT Title, Plot TEXT, Year, Genre, Rated, Runtime, Language, Country, Type FROM Filmes WHERE omdb_id = %s", (self.id_filme,))
+            self.cursor.execute("SELECT Title, Plot, Year, Genre, Rated, Runtime, Language, Country, Type FROM Filmes WHERE id = %s", (self.id_filme,))
             return self.cursor.fetchone()
         except Exception:
             self.cursor.connection.rollback()

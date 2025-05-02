@@ -17,8 +17,10 @@ class InserirFilme:
         language = self.resultado.get("Language")
         country = self.resultado.get("Country")
         type_filme_serie = self.resultado.get("Type")
+
+        print("Tentando inserir filme:", title, omdb_id)
         
-        if type == "movie":
+        if type_filme_serie == "movie":
             query = """
                 INSERT INTO Filmes (Title, Plot, Year, Genre, Rated, Runtime, Language, Country, Type, id)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -27,7 +29,7 @@ class InserirFilme:
             with self.conn.cursor() as cursor:
                 cursor.execute(query, (title, plot, year, genre, rated, runtime, language, country, type_filme_serie, omdb_id))
                 self.conn.commit()
-        elif type == "series":
+        elif type_filme_serie == "series":
             from codes import inserir_serie
             inserir_new_serie = inserir_serie.InserirSerie(self.conn, self.resultado)
             inserir_new_serie.inserir_no_bd()

@@ -40,15 +40,16 @@ def buscar_filmes_endpoint_nome(nome):
     if resultados:
         for resultado in resultados:
             filmes_json.append({
-                "Titulo": resultado[1],
-                "Plot": resultado[2],
-                "Ano": resultado[3],
-                "Genero": resultado[4],
-                "Qualificação": resultado[5],
-                "Duração": resultado[6],
-                "Lingua": resultado[7],
-                "Pais": resultado[8],
-                "Tipo": resultado[9],
+                "Titulo": resultado[0],
+                "Plot": resultado[1],
+                "Ano": resultado[2],
+                "Genero": resultado[3],
+                "Classificação Indicativa": resultado[4],
+                "Duração": resultado[5],
+                "Lingua": resultado[6],
+                "Pais": resultado[7],
+                "Tipo": resultado[8],
+                "msg": "Busca no DB"
             })
     else:
         filme_omdb = buscar_omdb_filme_nome.BuscarOMDbFilmeNome(cursor, nome, API_KEY)
@@ -77,11 +78,12 @@ def buscar_filmes_endpoint_nome(nome):
                 "Plot": plot,
                 "Ano": year,
                 "Genero": genre,
-                "Qualificação": rated,
+                "Classificação Indicativa": rated,
                 "Duração": runtime,
                 "Lingua(s)": language,
                 "Pais(es)": country,
                 "Tipo": type_filme_serie,
+                "msg": "Busca na OMDB"
             })
 
     conn.commit()
@@ -98,15 +100,15 @@ def buscar_filmes_endpoint_id(id):
     resultado = filme.buscar_filme_id()
 
     if resultado:
-        title = resultado[1]
-        plot = resultado[2]
-        year = resultado[3]
-        genre = resultado[4]
-        rated = resultado[5]
-        runtime = resultado[6]
-        language = resultado[7]
-        country = resultado[8]
-        type_filme_serie = resultado[9]
+        title = resultado[0]
+        plot = resultado[1]
+        year = resultado[2]
+        genre = resultado[3]
+        rated = resultado[4]
+        runtime = resultado[5]
+        language = resultado[6]
+        country = resultado[7]
+        type_filme_serie = resultado[8]
     else:
         filme_omdb = buscar_omdb_filme_id.BuscarOMDbFilmeId(cursor, id_filme, API_KEY)
         resultado = filme_omdb.buscar_omdb_filme_id()
@@ -133,11 +135,12 @@ def buscar_filmes_endpoint_id(id):
         "Plot": plot,
         "Ano": year,
         "Genero": genre,
-        "Qualificação": rated,
+        "Classificação Indicativa": rated,
         "Duração": runtime,
         "Lingua(s)": language,
         "Pais(es)": country,
-        "Série ou Filme": type_filme_serie
+        "Série ou Filme": type_filme_serie,
+        "msg": "Busca na OMDB"
     })
 
     cursor.close()
@@ -147,11 +150,12 @@ def buscar_filmes_endpoint_id(id):
         "Plot": plot,
         "Ano": year,
         "Genero": genre,
-        "Qualificação": rated,
+        "Classificação Indicativa": rated,
         "Duração": runtime,
         "Lingua(s)": language,
         "Pais(es)": country,
-        "Série ou Filme": type_filme_serie
+        "Série ou Filme": type_filme_serie,
+        "msg": "Busca no DB"
     })
 
 
@@ -169,17 +173,18 @@ def buscar_serie_endpoint_nome(nome):
     if resultados:
         for resultado in resultados:
             series_json.append({
-                "Titulo": resultado[1],
-                "Plot": resultado[2],
-                "Ano": resultado[3],
-                "Genero": resultado[4],
-                "Qualificação": resultado[5],
-                "Duração": resultado[6],
-                "Lingua": resultado[7],
-                "Pais": resultado[8],
-                "Tipo": resultado[9],
-                "Temporadas": resultado[10],
-            }), 200
+                "Titulo": resultado[0],
+                "Plot": resultado[1],
+                "Ano": resultado[2],
+                "Genero": resultado[3],
+                "Classificação Indicativa": resultado[4],
+                "Duração": resultado[5],
+                "Lingua": resultado[6],
+                "Pais": resultado[7],
+                "Tipo": resultado[8],
+                "Temporadas": resultado[9],
+                "msg": "Busca no DB"
+            })
     else:
         serie_omdb = buscar_omdb_serie_nome.BuscarOMDbSerieNome(cursor, nome, API_KEY)
         resultados_omdb = serie_omdb.buscar_omdb_serie_nome()
@@ -208,12 +213,13 @@ def buscar_serie_endpoint_nome(nome):
                 "Plot": plot,
                 "Ano": year,
                 "Genero": genre,
-                "Qualificação": rated,
+                "Classificação Indicativa": rated,
                 "Duração": runtime,
                 "Lingua(s)": language,
                 "Pais(es)": country,
                 "Tipo": type_filme_serie,
                 "Temporadas": seasons,
+                "msg": "Busca na OMDB"
             })
 
     conn.commit()
@@ -231,16 +237,16 @@ def buscar_serie_endpoint_id(id):
     resultado = serie.buscar_serie_id()
 
     if resultado:
-        title = resultado[1]
-        plot = resultado[2]
-        year = resultado[3]
-        genre = resultado[4]
-        rated = resultado[5]
-        runtime = resultado[6]
-        language = resultado[7]
-        country = resultado[8]
-        type_filme_serie = resultado[9]
-        seasons = resultado [10]
+        title = resultado[0]
+        plot = resultado[1]
+        year = resultado[2]
+        genre = resultado[3]
+        rated = resultado[4]
+        runtime = resultado[5]
+        language = resultado[6]
+        country = resultado[7]
+        type_filme_serie = resultado[8]
+        seasons = resultado [9]
     else:
         serie_omdb = buscar_omdb_serie_id.BuscarOMDbSerieId(cursor, id_serie, API_KEY)
         resultado = serie_omdb.buscar_omdb_serie_id()
@@ -267,12 +273,13 @@ def buscar_serie_endpoint_id(id):
         "Plot": plot,
         "Ano": year,
         "Genero": genre,
-        "Qualificação": rated,
+        "Classificação Indicativa": rated,
         "Duração": runtime,
         "Lingua(s)": language,
         "Pais(es)": country,
         "Temporadas": seasons,
         "Série ou Filme": type_filme_serie,
+        "msg": "Busca na OMDB"
     })
 
     cursor.close()
@@ -282,10 +289,11 @@ def buscar_serie_endpoint_id(id):
         "Plot": plot,
         "Ano": year,
         "Genero": genre,
-        "Qualificação": rated,
+        "Classificação Indicativa": rated,
         "Duração": runtime,
         "Lingua(s)": language,
         "Pais(es)": country,
         "Temporadas": seasons,
         "Série ou Filme": type_filme_serie,
+        "msg": "Busca no DB"
     })
