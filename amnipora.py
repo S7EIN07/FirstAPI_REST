@@ -26,11 +26,11 @@ DB_PORT = os.getenv("DB_PORT")
 conn = psycopg.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, host=DB_HOST, port=DB_PORT)
 
 
-@app.route("/buscar_filme_nome/<nome_filme_link>", methods=["GET"])
-def buscar_filmes_endpoint_nome(nome_filme_link):
+@app.route("/filme/nome/<nome>", methods=["GET"])
+def buscar_filmes_endpoint_nome(nome):
     conn.rollback()
     cursor = conn.cursor()
-    nome = nome_filme_link
+    nome = nome
 
     filme = buscar_filme_nome.BuscarFilmeNome(cursor, nome)
     resultados = filme.buscar_filme_nome()
@@ -66,7 +66,7 @@ def buscar_filmes_endpoint_nome(nome_filme_link):
             rated = resultado.get("Rated")
             runtime = resultado.get("Runtime")
             language = resultado.get("Language")
-            country = resultado.get("Coutry")
+            country = resultado.get("Country")
             type_filme_serie = resultado.get("Type")
 
             inserir_filme_endpoint = inserir_filme.InserirFilme(conn, resultado)
@@ -88,25 +88,25 @@ def buscar_filmes_endpoint_nome(nome_filme_link):
     cursor.close()
     return jsonify(filmes_json)
 
-@app.route("/buscar_filme_id/<id_filme_link>", methods=["GET"])
-def buscar_filmes_endpoint_id(id_filme_link):
+@app.route("/filme/id/<id>", methods=["GET"])
+def buscar_filmes_endpoint_id(id):
     conn.rollback()
     cursor = conn.cursor()
-    id_filme = id_filme_link
+    id_filme = id
 
     filme = buscar_filme_id.BuscarFilmeId(cursor, id_filme)
     resultado = filme.buscar_filme_id()
 
     if resultado:
         title = resultado[1]
-        plot = resultado.get[2]
-        year = resultado.get[3]
-        genre = resultado.get[4]
-        rated = resultado.get[5]
-        runtime = resultado.get[6]
-        language = resultado.get[7]
-        country = resultado.get[8]
-        type_filme_serie = resultado.get[9]
+        plot = resultado[2]
+        year = resultado[3]
+        genre = resultado[4]
+        rated = resultado[5]
+        runtime = resultado[6]
+        language = resultado[7]
+        country = resultado[8]
+        type_filme_serie = resultado[9]
     else:
         filme_omdb = buscar_omdb_filme_id.BuscarOMDbFilmeId(cursor, id_filme, API_KEY)
         resultado = filme_omdb.buscar_omdb_filme_id()
@@ -121,7 +121,7 @@ def buscar_filmes_endpoint_id(id_filme_link):
         rated = resultado.get("Rated")
         runtime = resultado.get("Runtime")
         language = resultado.get("Language")
-        country = resultado.get("Coutry")
+        country = resultado.get("Country")
         type_filme_serie = resultado.get("Type")
 
 
@@ -155,11 +155,11 @@ def buscar_filmes_endpoint_id(id_filme_link):
     })
 
 
-@app.route("/buscar_serie_nome/<nome_serie_link>", methods=["GET"])
-def buscar_serie_endpoint_nome(nome_serie_link):
+@app.route("/serie/nome/<nome>", methods=["GET"])
+def buscar_serie_endpoint_nome(nome):
     conn.rollback()
     cursor = conn.cursor()
-    nome = nome_serie_link
+    nome = nome
 
     serie = buscar_serie_nome.BuscarSerieNome(cursor, nome)
     resultados = serie.buscar_serie_nome()
@@ -196,7 +196,7 @@ def buscar_serie_endpoint_nome(nome_serie_link):
             rated = resultado.get("Rated")
             runtime = resultado.get("Runtime")
             language = resultado.get("Language")
-            country = resultado.get("Coutry")
+            country = resultado.get("Country")
             type_filme_serie = resultado.get("Type")
             seasons = resultado.get("Seasons")
 
@@ -221,11 +221,11 @@ def buscar_serie_endpoint_nome(nome_serie_link):
     return jsonify(series_json)
 
 
-@app.route("/buscar_serie_id/<id_serie_link>", methods=["GET"])
-def buscar_serie_endpoint_id(id_serie_link):
+@app.route("/serie/id/<id>", methods=["GET"])
+def buscar_serie_endpoint_id(id):
     conn.rollback()
     cursor = conn.cursor()
-    id_serie = id_serie_link
+    id_serie = id
 
     serie = buscar_serie_id.BuscarSerieId(cursor, id_serie)
     resultado = serie.buscar_serie_id()
@@ -255,7 +255,7 @@ def buscar_serie_endpoint_id(id_serie_link):
         rated = resultado.get("Rated")
         runtime = resultado.get("Runtime")
         language = resultado.get("Language")
-        country = resultado.get("Coutry")
+        country = resultado.get("Country")
         type_filme_serie = resultado.get("Type")
         seasons = resultado.get("Seasons")
 
