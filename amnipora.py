@@ -83,7 +83,7 @@ def buscar_filmes_endpoint_nome(nome):
                 "Lingua(s)": language,
                 "Pais(es)": country,
                 "Tipo": type_filme_serie,
-                "msg": "Busca na OMDB"
+                "msg": "Buscado na OMDB e postado no BD"
             })
 
     conn.commit()
@@ -140,7 +140,7 @@ def buscar_filmes_endpoint_id(id):
         "Lingua(s)": language,
         "Pais(es)": country,
         "Série ou Filme": type_filme_serie,
-        "msg": "Busca na OMDB"
+        "msg": "Buscado na OMDB e postado no BD"
     })
 
     cursor.close()
@@ -219,7 +219,7 @@ def buscar_serie_endpoint_nome(nome):
                 "Pais(es)": country,
                 "Tipo": type_filme_serie,
                 "Temporadas": seasons,
-                "msg": "Busca na OMDB"
+                "msg": "Buscado na OMDB e postado no BD"
             })
 
     conn.commit()
@@ -279,7 +279,7 @@ def buscar_serie_endpoint_id(id):
         "Pais(es)": country,
         "Temporadas": seasons,
         "Série ou Filme": type_filme_serie,
-        "msg": "Busca na OMDB"
+        "msg": "Buscado na OMDB e postado no BD"
     })
 
     cursor.close()

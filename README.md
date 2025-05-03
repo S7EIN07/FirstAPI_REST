@@ -5,6 +5,10 @@ Esta é a documentação para a API REST de busca de filmes e séries. Esta API 
 ## Bibliotecas Utilizadas
 
 Este projeto utiliza as seguintes bibliotecas Python:
+```python
+    pip install flask psycopg[binary] python-dotenv requests
+```
+
 
 * **Flask**: Um microframework web para construir a API REST.
     ```python
@@ -21,9 +25,8 @@ Este projeto utiliza as seguintes bibliotecas Python:
     from dotenv import load_dotenv
     ```
 
-* **requests**: Usado dentro dos módulos `codes.buscar_omdb_filme_nome`, `codes.buscar_omdb_filme_id`, `codes.buscar_omdb_serie_nome` e `codes.buscar_omdb_serie_id` para fazer requisições à API OMDb).
+* **requests**: Usado dentro dos módulos `codes.buscar_omdb_filme_nome`, `codes.buscar_omdb_filme_id`, `codes.buscar_omdb_serie_nome` e `codes.buscar_omdb_serie_id` para fazer requisições à API OMDb.
     ```python
-    # Exemplo de uso (provável dentro dos módulos 'codes')
     import requests
     ```
 
@@ -56,7 +59,7 @@ As seguintes variáveis de ambiente são necessárias e devem ser configuradas e
 
 ### 1. Buscar Filme por Nome
 
-**Endpoint:** `/buscar_filme_nome/<nome_filme_link>`
+**Endpoint:** `/filme/nome/<nome>`
 
 **Método:** `GET`
 
@@ -64,49 +67,63 @@ As seguintes variáveis de ambiente são necessárias e devem ser configuradas e
 
 **Parâmetros de Caminho:**
 
-* `nome_filme_link` (string, obrigatório): O nome do filme a ser buscado.
+* `nome` (string, obrigatório): O nome do filme a ser buscado.
 
 **Exemplo de Requisição:**
 ```http
-GET http://127.0.0.1:5000//buscar_filme_nome/Ultimato
+GET http://127.0.0.1:5000/filme/nome/Ultimato
 ```
 **Este exemplo de requisição retorna:**
 ```json
 {
-    "Ano": "2004",
-    "Filme ou Série": "Filme",
-    "Genero": "Short, Drama",
-    "Titulo": "Ultimato",
+    {
+        "Ano": "2004",
+        "Classificação Indicativa": "N/A",
+        "Duração": "12 min",
+        "Genero": "Short, Drama",
+        "Lingua(s)": "Portuguese",
+        "Pais(es)": "Portugal",
+        "Plot": "N/A",
+        "Tipo": "movie",
+        "Titulo": "Ultimato",
+        "msg": "Buscado na OMDB e postado no BD"
+    },
 }
 ```
-### 2. Buscar Filme por ID (IMDb ID)
+### 2. Buscar Filme por ID (OMDb ID)
 
-**Endpoint:** `/buscar_filme_id/<id_filme_link>`
+**Endpoint:** `/filme/id/<id>`
 
 **Método:** `GET`
 
-**Descrição:** Busca informações de um filme pelo ID IMDb. Primeiro, tenta encontrar no banco de dados local. Se não encontrar, consulta a API OMDb e armazena o resultado no banco de dados antes de retornar.
+**Descrição:** Busca informações de um filme pelo ID OMDb. Primeiro, tenta encontrar no banco de dados local. Se não encontrar, consulta a API OMDb e armazena o resultado no banco de dados antes de retornar.
 
 **Parâmetros de Caminho:**
 
-* `id_filme_link` (string, obrigatório): O ID IMDb do filme a ser buscado (ex: `tt0367279`).
+* `id` (string, obrigatório): O ID OMDb do filme a ser buscado (ex: `tt0367279`).
 
 **Exemplo de Requisição:**
 ```http
-GET http://127.0.0.1:5000//buscar_filme_id/tt1746625
+GET http://127.0.0.1:5000/filme/id/tt1746625
 ```
 **Este exemplo de requisição retorna:**
 ```json
 {
-    "Ano": "2004",
-    "Filme ou Série": "Filme",
+    "Ano": 2004,
+    "Classificação Indicativa": "N/A",
+    "Duração": "12 min",
     "Genero": "Short, Drama",
+    "Lingua(s)": "Portuguese",
+    "Pais(es)": "Portugal",
+    "Plot": "N/A",
+    "Série ou Filme": "movie",
     "Titulo": "Ultimato",
+    "msg": "Busca no DB"
 }
 ```
 ### 3. Buscar Série por Nome
 
-**Endpoint:** `/buscar_serie_nome/<nome_serie_link>`
+**Endpoint:** `/serie/nome/<nome>`
 
 **Método:** `GET`
 
@@ -114,46 +131,61 @@ GET http://127.0.0.1:5000//buscar_filme_id/tt1746625
 
 **Parâmetros de Caminho:**
 
-* `nome_serie_link` (string, obrigatório): O nome da série a ser buscada.
+* `nome` (string, obrigatório): O nome da série a ser buscada.
 
 **Exemplo de Requisição:**
 
 ```http
-GET http://127.0.0.1:5000/buscar_serie_nome/Breaking Bad
+GET http://127.0.0.1:5000/serie/nome/Breaking Bad
 ```
 
 **Este exemplo de requisição retorna:**
 
 ```json
 {
-    "Ano": "2008–2013",
-    "Filme ou Série": "series",
+   "Ano": "2008–2013",
+    "Classificação Indicativa": "TV-MA",
+    "Duração": "49 min",
     "Genero": "Crime, Drama, Thriller",
+    "Lingua(s)": "English, Spanish",
+    "Pais(es)": "United States",
+    "Plot": "A chemistry teacher diagnosed with inoperable lung cancer turns to manufacturing and selling methamphetamine with a former student to secure his family's future.",
+    "Temporadas": null,
+    "Tipo": "series",
     "Titulo": "Breaking Bad",
-}
-```
-### 4. Buscar Série por ID (IMDb ID)
+    "msg": "Buscado na OMDB e postado no BD"
+},
 
-**Endpoint:** `/buscar_serie_id/<id_serie_link>`
+```
+### 4. Buscar Série por ID (OMDb ID)
+
+**Endpoint:** `/serie/id/<id>`
 
 **Método:** `GET`
 
-**Descrição:** Busca informações de uma série pelo ID IMDb. Primeiro, tenta encontrar no banco de dados local. Se não encontrar, consulta a API OMDb e armazena o resultado no banco de dados antes de retornar.
+**Descrição:** Busca informações de uma série pelo ID OMDb. Primeiro, tenta encontrar no banco de dados local. Se não encontrar, consulta a API OMDb e armazena o resultado no banco de dados antes de retornar.
 
 **Parâmetros de Caminho:**
 
-* `id_serie_link` (string, obrigatório): O ID IMDb da serie a ser buscado (ex: `tt0118421`).
+* `id` (string, obrigatório): O ID OMDb da serie a ser buscado (ex: `tt0118421`).
 
 **Exemplo de Requisição:**
 ```http
-GET http://127.0.0.1:5000//buscar_serie_id/tt0118421
+GET http://127.0.0.1:5000/serie/id/tt0118421
 ```
 **Este exemplo de requisição retorna:**
 ```json
 {
     "Ano": "1997–2003",
-    "Filme ou Série": "Série",
+    "Classificação Indicativa": "TV-MA",
+    "Duração": "31S min",
     "Genero": "Crime, Drama, Thriller",
+    "Lingua(s)": "English",
+    "Pais(es)": "United States",
+    "Plot": "A series chronicling the daily activities of an unusual prison facility and its criminal inhabitants.",
+    "Série ou Filme": "series",
+    "Temporadas": null,
     "Titulo": "Oz",
+    "msg": "Buscado na OMDB e postado no BD"
 }
 ```
