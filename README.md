@@ -4,10 +4,10 @@ Esta é a documentação para a API REST de busca de filmes e séries. Esta API 
 
 ## Bibliotecas Utilizadas
 
-Este projeto utiliza as seguintes bibliotecas Python:
-```python
+#### Este projeto utiliza as seguintes bibliotecas Python:
+    ```python
     pip install flask psycopg[binary] python-dotenv requests
-```
+    ```
 
 
 * **Flask**: Um microframework web para construir a API REST.
