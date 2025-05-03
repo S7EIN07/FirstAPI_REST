@@ -1,5 +1,3 @@
-import json
-
 class InserirFilme:
     def __init__(self, conn, resultado):
         self.conn = conn
