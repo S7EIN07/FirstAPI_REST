@@ -90,6 +90,7 @@ def buscar_filmes_endpoint_nome(nome):
     cursor.close()
     return jsonify(filmes_json)
 
+
 @app.route("/filme/id/<id>", methods=["GET"])
 def buscar_filmes_endpoint_id(id):
     conn.rollback()
