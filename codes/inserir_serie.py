@@ -17,8 +17,6 @@ class InserirSerie:
         type_filme_serie = self.resultado.get("Type")
         seasons = self.resultado.get("Seasons")
 
-        print("Tentando inserir filme:", title, omdb_id)
-
         if type_filme_serie == "series":
             query = """
                 INSERT INTO Series (Title, Plot, Year, Genre, Rated, Runtime, Language, Country, Type, Seasons, id)

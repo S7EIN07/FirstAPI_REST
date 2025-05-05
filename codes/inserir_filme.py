@@ -17,8 +17,6 @@ class InserirFilme:
         language = self.resultado.get("Language")
         country = self.resultado.get("Country")
         type_filme_serie = self.resultado.get("Type")
-
-        print("Tentando inserir filme:", title, omdb_id)
         
         if type_filme_serie == "movie":
             query = """
