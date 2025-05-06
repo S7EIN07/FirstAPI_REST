@@ -34,11 +34,11 @@ No terminal, dentro da pasta do projeto, execute:
 python -m venv venv
 ```
 ### Ativar o ambiente virtual
-    No Windows:
+No Windows:
 ```bash
 venv\Scripts\activate
 ```
-    No Linux ou macOS:
+No Linux ou macOS:
 ```bash
 source venv/bin/activate
 ```
