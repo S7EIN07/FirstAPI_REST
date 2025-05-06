@@ -6,7 +6,7 @@ from codes import (
     buscar_filme_nome, buscar_filme_id, buscar_omdb_filme_id, 
     buscar_omdb_filme_nome, buscar_serie_nome, buscar_serie_id, 
     buscar_omdb_serie_id, buscar_omdb_serie_nome, inserir_filme,
-    inserir_serie
+    inserir_serie, mostrar_dados
 )
 
 
@@ -28,67 +28,15 @@ conn = psycopg.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, host=
 
 @app.route("/filme/nome/<nome>", methods=["GET"])
 def buscar_filmes_endpoint_nome(nome):
-    conn.rollback()
-    cursor = conn.cursor()
-    nome = nome
-
-    filme = buscar_filme_nome.BuscarFilmeNome(cursor, nome)
-    resultados = filme.buscar_filme_nome()
-
-    filmes_json = []
-
-    if resultados:
-        for resultado in resultados:
-            filmes_json.append({
-                "Titulo": resultado[0],
-                "Plot": resultado[1],
-                "Ano": resultado[2],
-                "Genero": resultado[3],
-                "Classificação Indicativa": resultado[4],
-                "Duração": resultado[5],
-                "Lingua": resultado[6],
-                "Pais": resultado[7],
-                "Tipo": resultado[8],
-                "msg": "Busca no DB"
-            })
-    else:
-        filme_omdb = buscar_omdb_filme_nome.BuscarOMDbFilmeNome(cursor, nome, API_KEY)
-        resultados_omdb = filme_omdb.buscar_omdb_filme_nome()
-
-        if not resultados_omdb:
-            cursor.close()
-            return jsonify({"erro": "Filme não encontrado."}), 404
-
-        for resultado in resultados_omdb:
-            title = resultado.get("Title")
-            plot = resultado.get("Plot")
-            year = resultado.get("Year")
-            genre = resultado.get("Genre")
-            rated = resultado.get("Rated")
-            runtime = resultado.get("Runtime")
-            language = resultado.get("Language")
-            country = resultado.get("Country")
-            type_filme_serie = resultado.get("Type")
-
-            inserir_filme_endpoint = inserir_filme.InserirFilme(conn, resultado)
-            inserir_filme_endpoint.inserir_no_bd()
-
-            filmes_json.append({
-                "Titulo": title,
-                "Plot": plot,
-                "Ano": year,
-                "Genero": genre,
-                "Classificação Indicativa": rated,
-                "Duração": runtime,
-                "Lingua(s)": language,
-                "Pais(es)": country,
-                "Tipo": type_filme_serie,
-                "msg": "Buscado na OMDB e postado no BD"
-            })
-
-    conn.commit()
-    cursor.close()
-    return jsonify(filmes_json)
+    return mostrar_dados.MostrarDados.buscar_item(
+        API_KEY,
+        tipo="filme",
+        identificador="nome",
+        valor=nome,
+        buscar_local_func=lambda conn, val: buscar_filme_nome.BuscarFilmeNome(conn, val).buscar_filme_nome,
+        buscar_omdb_func=lambda conn, val, key: buscar_omdb_filme_nome.BuscarOMDbFilmeNome(conn, val, key).buscar_omdb_filme_nome,
+        inserir_func=inserir_filme.InserirFilme
+    )
 
 
 @app.route("/filme/id/<id>", methods=["GET"])
