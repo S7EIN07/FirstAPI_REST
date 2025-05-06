@@ -22,7 +22,7 @@ class MostrarDados:
         cursor = self.cursor
 
         item_local = buscar_local_func(cursor, valor)
-        resultados = item_local() if identificador == "nome" else item_local
+        resultados = item_local() if identificador == "nome" else item_local()
 
         if resultados:
             if isinstance(resultados, list):
