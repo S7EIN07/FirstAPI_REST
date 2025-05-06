@@ -1,9 +1,9 @@
-from flask import Flask, jsonify
+from flask import  jsonify
 
 class MostrarDados:
     def __init__(self, conn, API_KEY):
         self.conn = conn
-        self.conn = conn.cursor()   
+        self.cursor = conn.cursor()   
         self.API_KEY = API_KEY
         
     def buscar_item(
@@ -17,7 +17,7 @@ class MostrarDados:
         campos_adicionais=[]
     ):
         self.conn.rollback()
-        cursor = self.conn.cursor()
+        cursor = self.cursor
 
         item_local = buscar_local_func(cursor, valor)
         resultados = item_local() if identificador == "nome" else item_local

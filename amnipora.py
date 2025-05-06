@@ -26,16 +26,18 @@ DB_PORT = os.getenv("DB_PORT")
 conn = psycopg.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, host=DB_HOST, port=DB_PORT)
 
 
+mostrar_dados_instance = mostrar_dados.MostrarDados(conn, API_KEY)
+
+
 @app.route("/filme/nome/<nome>", methods=["GET"])
 def buscar_filmes_endpoint_nome(nome):
-    return mostrar_dados.MostrarDados.buscar_item(
-        API_KEY,
-        tipo="filme",
-        identificador="nome",
-        valor=nome,
-        buscar_local_func=lambda conn, val: buscar_filme_nome.BuscarFilmeNome(conn, val).buscar_filme_nome,
-        buscar_omdb_func=lambda conn, val, key: buscar_omdb_filme_nome.BuscarOMDbFilmeNome(conn, val, key).buscar_omdb_filme_nome,
-        inserir_func=inserir_filme.InserirFilme
+    return mostrar_dados_instance.buscar_item(
+        tipo = "filme",
+        identificador = "nome",
+        valor = nome,
+        buscar_local_func = lambda conn, val: buscar_filme_nome.BuscarFilmeNome(conn, val).buscar_filme_nome,
+        buscar_omdb_func = lambda conn, val, key: buscar_omdb_filme_nome.BuscarOMDbFilmeNome(conn, val, key).buscar_omdb_filme_nome,
+        inserir_fun = inserir_filme.InserirFilme
     )
 
 
