@@ -16,6 +16,33 @@ Após entre na pasta:
 cd FirstAPI_REST
 ```
 
+# Ambiente Virtual com venv (Python)
+
+Este projeto recomenda o uso de um **ambiente virtual** para isolar as dependências e evitar conflitos com outras bibliotecas instaladas no seu sistema.
+
+## O que é o `venv`?
+
+O `venv` é um módulo do Python que permite criar ambientes virtuais — diretórios que contêm uma instalação independente do Python e das bibliotecas necessárias para um projeto. Ele ajuda a manter seu projeto limpo, organizado e compatível com outros sistemas.
+
+## Como criar e ativar um ambiente virtual
+
+### 1. Criar o ambiente virtual
+
+No terminal, dentro da pasta do projeto, execute:
+
+```bash
+python -m venv venv
+```
+### Ativar o ambiente virtual
+    No Windows:
+```bash
+venv\Scripts\activate
+```
+    No Linux ou macOS:
+```bash
+source venv/bin/activate
+```
+
 ## Bibliotecas Utilizadas
 
 Este projeto utiliza as bibliotecas Python que estão abaixo, ultilize o comando pip para efetuar a instalação das bibliotecas:
