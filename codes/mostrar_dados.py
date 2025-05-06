@@ -5,12 +5,6 @@ class MostrarDados:
         self.conn = conn
         self.cursor = conn.cursor()   
         self.API_KEY = API_KEY
-        self.tipo = tipo 
-        self.identificador = identificador
-        self.buscar_local_func = buscar_local_func
-        self.buscar_omdb_func = buscar_omdb_func
-        self.inserir_func = inserir_func
-        self.campos_adicionais = campos_adicionais
         
         
         

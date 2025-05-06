@@ -37,7 +37,7 @@ def buscar_filmes_endpoint_nome(nome):
         valor = nome,
         buscar_local_func = lambda conn, val: buscar_filme_nome.BuscarFilmeNome(conn, val).buscar_filme_nome,
         buscar_omdb_func = lambda conn, val, key: buscar_omdb_filme_nome.BuscarOMDbFilmeNome(conn, val, key).buscar_omdb_filme_nome,
-        inserir_fun = inserir_filme.InserirFilme
+        inserir_func = inserir_filme.InserirFilme
     )
 
 
@@ -49,7 +49,7 @@ def buscar_filmes_endpoint_id(id):
         valor = id,
         buscar_local_func = lambda conn, val: buscar_filme_id.BuscarFilmeId(conn, val).buscar_filme_id,
         buscar_omdb_func = lambda conn, val, key: buscar_omdb_filme_id.BuscarOMDbFilmeId(conn, val, key).buscar_omdb_filme_id,
-        inserir_fun = inserir_filme.InserirFilme
+        inserir_func = inserir_filme.InserirFilme
     )
 
 
@@ -61,7 +61,7 @@ def buscar_serie_endpoint_nome(nome):
         valor = nome,
         buscar_local_func = lambda conn, val: buscar_serie_nome.BuscarSerieNome(conn, val).buscar_serie_nome,
         buscar_omdb_func = lambda conn, val, key: buscar_omdb_serie_nome.BuscarOMDbSerieNome(conn, val, key).buscar_omdb_serie_nome,
-        inserir_fun = inserir_serie.InserirSerie
+        inserir_func = inserir_serie.InserirSerie
     )
 
 
@@ -73,5 +73,5 @@ def buscar_serie_endpoint_id(id):
         valor = id,
         buscar_local_func = lambda conn, val: buscar_serie_id.BuscarSerieId(conn, val).buscar_serie_id,
         buscar_omdb_func = lambda conn, val, key: buscar_omdb_serie_id.BuscarOMDbSerieId(conn, val, key).buscar_omdb_serie_id,
-        inserir_fun = inserir_serie.InserirSerie
+        inserir_func = inserir_serie.InserirSerie
     )
