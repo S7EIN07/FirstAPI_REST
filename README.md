@@ -31,16 +31,16 @@ O `venv` é um módulo do Python que permite criar ambientes virtuais — diret�
 No terminal, dentro da pasta do projeto, execute:
 
 ```bash
-python -m venv venv
+python -m venv .venv
 ```
 ### Ativar o ambiente virtual
 No Windows:
 ```bash
-venv\Scripts\activate
+.venv\Scripts\activate
 ```
 No Linux ou macOS:
 ```bash
-source venv/bin/activate
+source .venv/bin/activate
 ```
 
 ## Bibliotecas Utilizadas
