@@ -2,6 +2,20 @@
 
 Esta é a documentação para a API REST de busca de filmes e séries. Esta API permite que os usuários pesquisem informações sobre filmes e séries, buscando em um banco de dados local e, caso não encontre, consultando a API OMDb. Os resultados da OMDb são então armazenados no banco de dados local para buscas futuras.
 
+## Clonando o Projeto
+
+Para obter o código-fonte desta API REST, você pode cloná-lo diretamente do GitHub utilizando o comando:
+
+```bash
+git clone https://github.com/S7EIN07/FirstAPI_REST.git
+```
+
+Após entre na pasta:
+
+```bash
+cd FirstAPI_REST
+```
+
 ## Bibliotecas Utilizadas
 
 Este projeto utiliza as bibliotecas Python que estão abaixo, ultilize o comando pip para efetuar a instalação das bibliotecas:
