@@ -5,7 +5,7 @@ class InserirSerie:
         self.resultado = resultado
 
     def inserir_no_bd(self):
-        omdb_id = self.resultado.get("imdbID")
+        omdb_id = self.resultado.get("omdbID")
         title = self.resultado.get("Title")
         plot = self.resultado.get("Plot")
         year = self.resultado.get("Year")
