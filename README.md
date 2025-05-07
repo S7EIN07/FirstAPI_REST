@@ -77,7 +77,7 @@ pip install flask psycopg[binary] python-dotenv requests
 
 ## Estrutura de Código (Módulos `codes`)
 
-O código está organizado em módulos dentro de um diretório `codes/` (a estrutura exata pode variar), que contêm as seguintes classes e funcionalidades:
+O código está organizado em módulos dentro de um diretório `codes/`, que contêm as seguintes classes e funcionalidades:
 
 * **`buscar_filme_nome.py`**: Contém a classe `BuscarFilmeNome` para buscar filmes por nome no banco de dados local.
 * **`buscar_filme_id.py`**: Contém a classe `BuscarFilmeId` para buscar filmes por ID no banco de dados local.
