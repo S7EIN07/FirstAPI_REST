@@ -12,7 +12,9 @@ from codes import (
 
 app = Flask(__name__)
 
+
 load_dotenv()
+
 
 API_KEY = os.getenv('API_KEY')
 
@@ -57,7 +59,7 @@ def buscar_filmes_endpoint_nome(nome):
 
         if not resultados_omdb:
             cursor.close()
-            return jsonify({"erro": "Filme não encontrado."}), 404
+            return jsonify({"erro": "Filme não encontrado."})
 
         for resultado in resultados_omdb:
             title = resultado.get("Title")
@@ -115,7 +117,7 @@ def buscar_filmes_endpoint_id(id):
         resultado = filme_omdb.buscar_omdb_filme_id()
 
         if not resultado:
-            return jsonify({"erro": "Filme não encontrado."}), 404
+            return jsonify({"erro": "Filme não encontrado."})
 
         title = resultado.get("Title")
         plot = resultado.get("Plot")
@@ -192,7 +194,7 @@ def buscar_serie_endpoint_nome(nome):
 
         if not resultados_omdb:
             cursor.close()
-            return jsonify({"erro": "Serie não encontrado."}), 404
+            return jsonify({"erro": "Serie não encontrado."})
 
         for resultado in resultados_omdb:
             title = resultado.get("Title")
@@ -253,7 +255,7 @@ def buscar_serie_endpoint_id(id):
         resultado = serie_omdb.buscar_omdb_serie_id()
 
         if not resultado:
-            return jsonify({"erro": "Série não encontrada."}), 404
+            return jsonify({"erro": "Série não encontrada."})
 
         title = resultado.get("Title")
         plot = resultado.get("Plot")
