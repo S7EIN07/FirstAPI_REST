@@ -32,7 +32,6 @@ conn = psycopg.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, host=
 def buscar_filmes_endpoint_nome(nome):
     conn.rollback()
     cursor = conn.cursor()
-    nome = nome
 
     filme = buscar_filme_nome.BuscarFilmeNome(cursor, nome)
     resultados = filme.buscar_filme_nome()
@@ -59,7 +58,7 @@ def buscar_filmes_endpoint_nome(nome):
 
         if not resultados_omdb:
             cursor.close()
-            return jsonify({"erro": "Filme não encontrado."})
+            return jsonify({"erro": "Filme não encontrado."}), 404
 
         for resultado in resultados_omdb:
             title = resultado.get("Title")
@@ -93,11 +92,10 @@ def buscar_filmes_endpoint_nome(nome):
     return jsonify(filmes_json)
 
 
-@app.route("/filme/id/<id>", methods=["GET"])
-def buscar_filmes_endpoint_id(id):
+@app.route("/filme/id/<id_filme>", methods=["GET"])
+def buscar_filmes_endpoint_id(id_filme):
     conn.rollback()
     cursor = conn.cursor()
-    id_filme = id
 
     filme = buscar_filme_id.BuscarFilmeId(cursor, id_filme)
     resultado = filme.buscar_filme_id()
@@ -117,7 +115,7 @@ def buscar_filmes_endpoint_id(id):
         resultado = filme_omdb.buscar_omdb_filme_id()
 
         if not resultado:
-            return jsonify({"erro": "Filme não encontrado."})
+            return jsonify({"erro": "Filme não encontrado."}), 404
 
         title = resultado.get("Title")
         plot = resultado.get("Plot")
@@ -166,7 +164,6 @@ def buscar_filmes_endpoint_id(id):
 def buscar_serie_endpoint_nome(nome):
     conn.rollback()
     cursor = conn.cursor()
-    nome = nome
 
     serie = buscar_serie_nome.BuscarSerieNome(cursor, nome)
     resultados = serie.buscar_serie_nome()
@@ -194,7 +191,7 @@ def buscar_serie_endpoint_nome(nome):
 
         if not resultados_omdb:
             cursor.close()
-            return jsonify({"erro": "Serie não encontrado."})
+            return jsonify({"erro": "Serie não encontrado."}), 404
 
         for resultado in resultados_omdb:
             title = resultado.get("Title")
@@ -230,11 +227,10 @@ def buscar_serie_endpoint_nome(nome):
     return jsonify(series_json)
 
 
-@app.route("/serie/id/<id>", methods=["GET"])
-def buscar_serie_endpoint_id(id):
+@app.route("/serie/id/<id_serie>", methods=["GET"])
+def buscar_serie_endpoint_id(id_serie):
     conn.rollback()
     cursor = conn.cursor()
-    id_serie = id
 
     serie = buscar_serie_id.BuscarSerieId(cursor, id_serie)
     resultado = serie.buscar_serie_id()
@@ -255,7 +251,7 @@ def buscar_serie_endpoint_id(id):
         resultado = serie_omdb.buscar_omdb_serie_id()
 
         if not resultado:
-            return jsonify({"erro": "Série não encontrada."})
+            return jsonify({"erro": "Série não encontrada."}), 404
 
         title = resultado.get("Title")
         plot = resultado.get("Plot")
