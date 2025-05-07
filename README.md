@@ -1,4 +1,4 @@
-# API REST de Busca de Filmes e Séries
+# API para Busca de Filmes e Séries
 
 Esta é a documentação para a API REST de busca de filmes e séries. Esta API permite que os usuários pesquisem informações sobre filmes e séries, buscando em um banco de dados local e, caso não encontre, consultando a API OMDb. Os resultados da OMDb são então armazenados no banco de dados local para buscas futuras.
 
