@@ -31,16 +31,16 @@ O `venv` é um módulo do Python que permite criar ambientes virtuais — diret�
 No terminal, dentro da pasta do projeto, execute:
 
 ```bash
-python -m venv venv
+python -m venv .venv
 ```
 ### Ativar o ambiente virtual
 No Windows:
 ```bash
-venv\Scripts\activate
+.venv\Scripts\activate
 ```
 No Linux ou macOS:
 ```bash
-source venv/bin/activate
+source .venv/bin/activate
 ```
 
 ## Bibliotecas Utilizadas
@@ -56,6 +56,7 @@ pip install flask psycopg[binary] python-dotenv requests
     ```python
     from flask import Flask, jsonify
     ```
+    <sup>jsonify é uma das funções do flask usada para transformar em json<sup>
 
 * **psycopg**: Um adaptador PostgreSQL para Python, usado para interagir com o banco de dados.
     ```python
@@ -66,6 +67,8 @@ pip install flask psycopg[binary] python-dotenv requests
     ```python
     from dotenv import load_dotenv
     ```
+  <sup>No nosso projeto foi usado apenas a função load_dotenv<sup>
+
 
 * **requests**: Usado dentro dos módulos `codes.buscar_omdb_filme_nome`, `codes.buscar_omdb_filme_id`, `codes.buscar_omdb_serie_nome` e `codes.buscar_omdb_serie_id` para fazer requisições à API OMDb.
     ```python
